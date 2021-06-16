@@ -11,20 +11,13 @@ public class PlayerController : MonoBehaviour
 
     //Variable Can Change
     public float speedWalkN;
-    public float speedRotate;
+    public float speedJump;
 
     //Variable dont need to change
-    private bool goForward;
-    private bool goLeft;
-    private bool goRight;
-    private bool goBack;
-
-    public float moveX;
-    public float moveY;
-
-    public Vector3 input;
-
-    Quaternion targetRotation;
+    private float moveX;
+    private float moveY;
+    private Vector3 input;
+    private Quaternion targetRotation;
 
 
     void Start()
@@ -61,7 +54,7 @@ public class PlayerController : MonoBehaviour
                 _animator[i].SetBool("walkA", true);
             }
         }
-        else if (!goForward || !goBack || goLeft || goRight)
+        else if (moveX == 0 || moveY == 0)
         {
             for (int i = 0; i < _animator.Length; i++)
             {
@@ -73,5 +66,10 @@ public class PlayerController : MonoBehaviour
     public void RotateManager()
     {
         transform.rotation = Quaternion.LookRotation(input);
+    }
+
+    public void Jump()
+    {
+        _rigidbody.AddForce(0,speedJump * Time.deltaTime, 0);
     }
 }
